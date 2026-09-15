@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DSC Dreams | English Grammar and Vocabulary</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1e3a8a" />
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <h1>DSC Dreams</h1>
+    <div class="tagline">
+      <span class="tagline-1">Your Special App for English</span>
+      <span class="tagline-2">Grammar and Vocabulary for DSC – SGT</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- OPENING SCREEN (SPLASH / ABOUT) -->
+    <section id="panel-welcome" class="dashboard-view hidden">
+      <div class="welcome-banner">
+        <h2>Welcome, future teacher!</h2>
+        <p>Your journey to DSC success starts here. Improve your English grammar and vocabulary with smart practice tools, questions from previous exams, and learning support designed for you.</p>
+        <h2 style="margin-top: 1.5rem;">Special Features</h2>
+      </div>
+
+      <div class="features-box">
+        <!-- Feature 1: Practice by Topic -->
+        <div class="feature-item">
+          <h3>🎯 Practice by Topic</h3>
+          <p>Choose a topic you want to improve and practise it until you feel confident. The app covers around 30 English topics.</p>
+          <p class="topic-list-static">
+            Tenses & Aspect, Prepositions, Sentence Transformation, Articles, Modals & Semi-Modals, Spelling, Reported Speech, Punctuation
+          </p>
+          <span class="more-topics">+20 more topics</span>
+          <p class="feature-note"><em>All questions are authentic and taken from actual previous exam papers.</em></p>
+        </div>
+
+        <!-- Feature 2: Choose Difficulty Level -->
+        <div class="feature-item">
+          <h3>🎚️ Choose Difficulty Level</h3>
+          <p>Choose the difficulty level for each topic: Low, Medium, or High. Start with easier questions, build your confidence, and move gradually to more difficult ones.</p>
+        </div>
+
+        <!-- Feature 3: Smart Feedback -->
+        <div class="feature-item">
+          <h3>💡 Smart Feedback</h3>
+          <p>In many practice apps, your answer is immediately marked right or wrong, and the correct answer is shown. You may also be told why the other options are wrong. This gives you little chance to think again and find the answer yourself.</p>
+          <p>This special app works differently. If you choose a wrong option, the feedback helps you understand why it may be wrong without immediately giving you the correct answer. You can then think again and choose from the remaining options. By trying again, you learn the rule, tip, or trick behind the question instead of simply memorising the answer.</p>
+        </div>
+
+        <!-- Feature 4: Previous Papers -->
+        <div class="feature-item">
+          <h3>⏱️ Previous Papers</h3>
+          <p>Practise with 63 full sets of previous exam papers covering a wide range of question types and topics.</p>
+          <p>You can also use Practice Mode with previous papers. Attempt real exam questions without a time limit and get feedback on each option as you practise.</p>
+        </div>
+
+        <!-- Feature 5: Remedial Tests -->
+        <div class="feature-item">
+          <h3>🧠 Remedial Tests</h3>
+          <p>After a normal test, you usually see your score and review your answers once. Later, you may not get another chance to practise the questions you answered incorrectly.</p>
+          <p>This special app remembers the questions you get wrong in every test and collects them for you.</p>
+          <p>After completing 5 or 10 tests, open Remedial Tests to practise those questions again. This helps you check whether you have really mastered them.</p>
+        </div>
+      </div>
+
+      <!-- Instructions Prompt -->
+      <div class="instructions-prompt">
+        <p>Please read the full instructions to learn how to use the app effectively.</p>
+        <button id="btn-open-instructions" class="btn btn-secondary">📖 View App Instructions</button>
+      </div>
+
+      <!-- Splash Screen Dismissal -->
+      <div class="splash-controls">
+        <label class="checkbox-label">
+          <input type="checkbox" id="skip-welcome-cb" /> Don't show this again
+        </label>
+        <button id="btn-continue-app" class="btn btn-primary btn-large">Continue DSC Dreams ➔</button>
+      </div>
+    </section>
+
+    <!-- MAIN MENU (5 FLAT CARDS) -->
+    <section id="panel-menu" class="dashboard-view hidden">
+      <h2 class="menu-heading">Select your activity:</h2>
+      <div class="action-cards flat-menu">
+        <div class="card" data-target="panel-previous" data-mode="test">
+          <span class="card-title">Previous Papers</span>
+          <span class="card-subtitle">(Testing Mode)</span>
+        </div>
+        <div class="card" data-target="panel-previous" data-mode="practice">
+          <span class="card-title">Previous Papers</span>
+          <span class="card-subtitle">(Practice Mode)</span>
+        </div>
+        <div class="card" data-target="panel-topic" data-mode="test">
+          <span class="card-title">Grammar/Vocab Topic</span>
+          <span class="card-subtitle">(Testing Mode)</span>
+        </div>
+        <div class="card" data-target="panel-topic" data-mode="practice">
+          <span class="card-title">Grammar/Vocab Topic</span>
+          <span class="card-subtitle">(Practice Mode)</span>
+        </div>
+        <div class="card remedial-card" data-target="panel-remedial" data-mode="test">
+          <span class="card-title">Remedial Test</span>
+          <span class="card-subtitle">(Testing Mode)</span>
+        </div>
+      </div>
+      <div class="menu-footer">
+        <button id="btn-about-app" class="btn-text">ℹ️ About DSC Dreams & Instructions</button>
+      </div>
+    </section>
+
+    <!-- Built-in Instructions Screen -->
+    <section id="panel-instructions" class="config-panel hidden">
+      <div class="panel-header">
+        <button class="btn btn-nav btn-home">← Back</button>
+        <h2>App Instructions</h2>
+      </div>
+      <div class="instructions-content">
+        <h3>📱 How to Save to Home Screen</h3>
+        <ul>
+          <li><strong>iPhone (Safari):</strong> Tap the 'Share' icon at the bottom of the screen (a square with an upward arrow). Scroll down and tap <strong>Add to Home Screen</strong>.</li>
+          <li><strong>Android (Chrome):</strong> Tap the three-dot menu icon in the top right corner. Select <strong>Add to Home Screen</strong> or <strong>Install App</strong>.</li>
+        </ul>
+
+        <h3>🧭 Navigation Guide</h3>
+        <ul>
+          <li>Start at the <strong>Main Menu</strong> to pick your activity.</li>
+          <li>Inside a session, use <strong>Prev</strong> and <strong>Next</strong> to move between questions, or tap <strong>List</strong> to jump to any specific question number.</li>
+          <li>Always use the red <strong>Quit</strong> button or the <strong>Return to Dashboard</strong> button to exit. <em>Do not use your phone's browser back button!</em></li>
+        </ul>
+
+        <h3>✅ Do's and Don'ts</h3>
+        <ul>
+          <li><strong>DO</strong> take the Remedial Test regularly to clear out your logged mistakes.</li>
+          <li><strong>DO</strong> submit your test to save your progress and log your errors.</li>
+          <li><strong>DON'T</strong> refresh the webpage while taking a timed test, or your progress will be lost.</li>
+        </ul>
+
+        <h3>💡 Pro Tips</h3>
+        <ul>
+          <li><strong>In Practice Mode:</strong> Don't rush! Read the feedback carefully. If you get it wrong, the app will give you a hint without revealing the answer. Use that hint to try again!</li>
+          <li><strong>In Testing Mode:</strong> Treat it like the real DSC exam. Keep an eye on the clock. If you get stuck, use the 'List' button to quickly skip and return to difficult questions later.</li>
+        </ul>
+
+        <h3>🛠️ Troubleshooting</h3>
+        <ul>
+          <li><strong>App not loading:</strong> Make sure you have an internet connection the very first time you open the app. After that, it works completely offline!</li>
+          <li><strong>Icon disappeared:</strong> If you accidentally delete the app from your home screen, simply visit the web link again and repeat the "Add to Home Screen" steps.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Config Panel: Previous Paper -->
+    <section id="panel-previous" class="config-panel hidden">
+      <div class="panel-header">
+        <button class="btn btn-nav btn-home">← Menu</button>
+        <h2 id="prev-panel-title">Previous Paper</h2>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="prev-exam">Exam Filter</label>
+          <select id="prev-exam">
+            <option value="DSC">DSC</option>
+            <option value="TET">TET</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="prev-year">Year</label>
+          <select id="prev-year" disabled></select>
+        </div>
+        <div class="form-group">
+          <label for="prev-set">Set</label>
+          <select id="prev-set" disabled></select>
+        </div>
+      </div>
+      <div class="meta-row">
+        <span>Available Questions: <strong id="prev-count">0</strong></span>
+        <span id="prev-time-wrap" class="hidden">Time: <strong id="prev-time">0 min</strong></span>
+      </div>
+      <div class="action-row">
+        <button id="prev-start" class="btn btn-primary" disabled>START SESSION</button>
+      </div>
+    </section>
+
+    <!-- Config Panel: Grammar/Vocab Topic -->
+    <section id="panel-topic" class="config-panel hidden">
+      <div class="panel-header">
+        <button class="btn btn-nav btn-home">← Menu</button>
+        <h2 id="topic-panel-title">Grammar/Vocab Topic</h2>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="topic-exam">Exam Filter</label>
+          <select id="topic-exam">
+            <option value="ALL">All (DSC & TET)</option>
+            <option value="DSC">DSC</option>
+            <option value="TET">TET</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="topic-broad">Broad Area (Topic)</label>
+          <select id="topic-broad"></select>
+        </div>
+        <div class="form-group">
+          <label for="topic-sub">Sub Area</label>
+          <select id="topic-sub" disabled></select>
+        </div>
+        <div class="form-group">
+          <label for="topic-diff">Difficulty</label>
+          <select id="topic-diff">
+            <option value="ALL">All Levels</option>
+            <option value="LOW">Low (1 - 3)</option>
+            <option value="MED">Medium (4 - 7)</option>
+            <option value="HIGH">High (8 - 10)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="topic-qcount">No. of Qns. Selected</label>
+          <div class="stepper-group">
+            <button type="button" id="btn-q-down" class="btn-stepper">-</button>
+            <input type="number" id="topic-qcount" min="1" step="1" />
+            <button type="button" id="btn-q-up" class="btn-stepper">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="meta-row">
+        <span>Matching Questions Available: <strong id="topic-avail-count">0</strong></span>
+        <span id="topic-time-wrap" class="hidden">Time: <strong id="topic-time">0 min</strong></span>
+      </div>
+      <div class="action-row">
+        <button id="topic-start" class="btn btn-primary" disabled>START SESSION</button>
+      </div>
+    </section>
+
+    <!-- Config Panel: Remedial Test -->
+    <section id="panel-remedial" class="config-panel hidden">
+      <div class="panel-header">
+        <button class="btn btn-nav btn-home">← Menu</button>
+        <h2>Remedial Adaptive Test</h2>
+      </div>
+      <p class="panel-desc">Questions you previously answered incorrectly across practice and test sessions are queued here.</p>
+      <div class="remedial-box">
+        <div>Total Logged Mistakes: <strong id="remedial-count">0</strong></div>
+        <div class="remedial-options">
+          <label>
+            <input type="checkbox" id="remedial-ignore-opt" /> Clear recorded history after starting
+          </label>
+        </div>
+      </div>
+      <div class="action-row">
+        <button id="remedial-start" class="btn btn-primary" disabled>START REMEDIAL TEST</button>
+        <button id="remedial-clear" class="btn btn-danger">CLEAR MISTAKES LOG</button>
+      </div>
+    </section>
+
+    <!-- Active Question Container -->
+    <section id="quiz-container" class="quiz-container hidden">
+      <div class="quiz-header">
+        <div class="quiz-info">
+          <span id="q-counter">Question 1 of 30</span>
+          <span id="q-id" class="q-id-tag">ID: -</span>
+        </div>
+        <div id="quiz-timer" class="quiz-timer hidden">00:00</div>
+      </div>
+
+      <!-- Question Text -->
+      <div id="q-text" class="question-text"></div>
+
+      <!-- Options -->
+      <div id="options-list" class="options-list"></div>
+
+      <!-- Immediate Feedback Card -->
+      <div id="instant-feedback" class="feedback-card hidden"></div>
+
+      <!-- Navigation & Action Buttons -->
+      <div class="quiz-actions">
+        <div class="nav-cluster">
+          <button id="btn-prev" class="btn btn-nav">Prev</button>
+          <button id="btn-next" class="btn btn-nav">Next</button>
+        </div>
+        <div class="action-cluster">
+          <button id="btn-review-modal" class="btn btn-secondary">List</button>
+          <button id="btn-submit" class="btn btn-success">Submit</button>
+          <button class="btn btn-danger btn-home">Quit</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Review Navigation Modal -->
+    <div id="review-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Question Navigator</h3>
+        <p>Jump to any question to view or update your answer:</p>
+        <div id="review-palette" class="palette-grid"></div>
+        <div class="modal-actions">
+          <button id="close-review" class="btn btn-secondary">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result & Analytics Screen -->
+    <section id="result-screen" class="result-screen hidden">
+      <h2>Performance Summary</h2>
+      
+      <div class="score-card">
+        <div class="score-main">
+          <span id="res-score">0 / 0</span>
+          <small id="res-percentage">0%</small>
+        </div>
+        <div class="score-sub">
+          <div>Correct: <strong id="res-correct" class="text-success">0</strong></div>
+          <div>Incorrect: <strong id="res-wrong" class="text-danger">0</strong></div>
+          <div>Unanswered: <strong id="res-unanswered">0</strong></div>
+        </div>
+      </div>
+
+      <!-- Dynamic Verbal Feedback -->
+      <div id="res-feedback-box" class="feedback-card" style="margin: 1.5rem 0; font-size: 1.15rem; text-align: center; font-weight: 600;">
+        <span id="res-feedback-text"></span>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-primary btn-home">Return to Dashboard</button>
+        <button id="btn-review-answers" class="btn btn-secondary">Review All</button>
+        <button id="btn-review-misses" class="btn btn-danger hidden">Review Misses</button>
+      </div>
+    </section>
+
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
