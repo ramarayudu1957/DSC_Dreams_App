@@ -189,6 +189,9 @@ body {
 .btn-success { background: var(--success); color: #fff; }
 .btn-danger { background: var(--danger); color: #fff; }
 .btn-nav { background: #f1f5f9; color: var(--text-dark); border: 1px solid var(--border); }
+.btn-menu { background: #7c3aed; color: #fff; }
+.btn-prev { background: #d97706; color: #fff; }
+.btn-next { background: #2563eb; color: #fff; }
 
 /* Question Box */
 .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }

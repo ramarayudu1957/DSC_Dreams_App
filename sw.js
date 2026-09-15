@@ -1,9 +1,9 @@
-const CACHE_NAME = "dsc-sgt-v10-question-bank-1424";
+const CACHE_NAME = "dsc-sgt-v13-question-bank-1418";
 const CORE_ASSETS = [
   "./",
   "./index.html",
-  "./style.css",
-  "./app.js",
+  "./style.css?v=13",
+  "./app.js?v=13",
   "./manifest.json",
   "./question_bank.json",
   "./icon-192.png",

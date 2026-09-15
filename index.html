@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DSC Dreams | English Grammar and Vocabulary</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=13" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#1e3a8a" />
   <link rel="icon" href="icon-192.png" type="image/png" />
@@ -58,7 +58,7 @@
         <!-- Feature 4: Previous Papers -->
         <div class="feature-item">
           <h3>⏱️ Previous Papers</h3>
-          <p>Practise with <strong id="dataset-question-count">1,424</strong> authentic language questions from <strong id="dataset-paper-count">84</strong> previous-paper sets.</p>
+          <p>Practise with <strong id="dataset-question-count">1,418</strong> authentic language questions from <strong id="dataset-paper-count">80</strong> previous-paper sets.</p>
           <p>You can also use Practice Mode with previous papers. Attempt real exam questions without a time limit and get feedback on each option as you practise.</p>
         </div>
 
@@ -99,11 +99,11 @@
           <span class="card-subtitle">(Practice Mode)</span>
         </div>
         <div class="card" data-target="panel-topic" data-mode="test">
-          <span class="card-title">Grammar/Vocab Topic</span>
+          <span class="card-title">Grammar/Vocabulary/Phonetics Topic</span>
           <span class="card-subtitle">(Testing Mode)</span>
         </div>
         <div class="card" data-target="panel-topic" data-mode="practice">
-          <span class="card-title">Grammar/Vocab Topic</span>
+          <span class="card-title">Grammar/Vocabulary/Phonetics Topic</span>
           <span class="card-subtitle">(Practice Mode)</span>
         </div>
         <div class="card remedial-card" data-target="panel-remedial" data-mode="test">
@@ -119,7 +119,7 @@
     <!-- Built-in Instructions Screen -->
     <section id="panel-instructions" class="config-panel hidden">
       <div class="panel-header">
-        <button class="btn btn-nav btn-home">← Back</button>
+        <button class="btn btn-menu btn-home">← Back</button>
         <h2>App Instructions</h2>
       </div>
       <div class="instructions-content">
@@ -160,7 +160,7 @@
     <!-- Config Panel: Previous Paper -->
     <section id="panel-previous" class="config-panel hidden">
       <div class="panel-header">
-        <button class="btn btn-nav btn-home">← Menu</button>
+        <button class="btn btn-menu btn-home">← Menu</button>
         <h2 id="prev-panel-title">Previous Paper</h2>
       </div>
       <div class="form-grid">
@@ -170,10 +170,6 @@
             <option value="DSC">DSC</option>
             <option value="TET">TET</option>
           </select>
-        </div>
-        <div class="form-group">
-          <label for="prev-category">Exam Category</label>
-          <select id="prev-category" disabled></select>
         </div>
         <div class="form-group">
           <label for="prev-year">Year</label>
@@ -193,11 +189,11 @@
       </div>
     </section>
 
-    <!-- Config Panel: Grammar/Vocab Topic -->
+    <!-- Config Panel: Grammar/Vocabulary/Phonetics Topic -->
     <section id="panel-topic" class="config-panel hidden">
       <div class="panel-header">
-        <button class="btn btn-nav btn-home">← Menu</button>
-        <h2 id="topic-panel-title">Grammar/Vocab Topic</h2>
+        <button class="btn btn-menu btn-home">← Menu</button>
+        <h2 id="topic-panel-title">Grammar/Vocabulary/Phonetics Topic</h2>
       </div>
       <div class="form-grid">
         <div class="form-group">
@@ -246,7 +242,7 @@
     <!-- Config Panel: Remedial Test -->
     <section id="panel-remedial" class="config-panel hidden">
       <div class="panel-header">
-        <button class="btn btn-nav btn-home">← Menu</button>
+        <button class="btn btn-menu btn-home">← Menu</button>
         <h2>Remedial Adaptive Test</h2>
       </div>
       <p class="panel-desc">Questions you previously answered incorrectly across practice and test sessions are queued here.</p>
@@ -285,14 +281,14 @@
 
       <!-- Navigation & Action Buttons -->
       <div class="quiz-actions">
-        <div class="nav-cluster">
-          <button id="btn-prev" class="btn btn-nav">Prev</button>
-          <button id="btn-next" class="btn btn-nav">Next</button>
-        </div>
         <div class="action-cluster">
           <button id="btn-review-modal" class="btn btn-secondary">List</button>
           <button id="btn-submit" class="btn btn-success">Submit</button>
           <button class="btn btn-danger btn-home">Quit</button>
+        </div>
+        <div class="nav-cluster">
+          <button id="btn-prev" class="btn btn-prev">Prev</button>
+          <button id="btn-next" class="btn btn-next">Next</button>
         </div>
       </div>
     </section>
@@ -338,7 +334,7 @@
     </section>
 
   </main>
-  <script src="app.js"></script>
+  <script src="app.js?v=13"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {

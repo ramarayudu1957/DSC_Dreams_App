@@ -1,6 +1,6 @@
 # DSC Dreams
 
-DSC Dreams is a static progressive web app for practising English grammar and vocabulary questions from DSC and TET papers. The current question bank contains 1,424 questions.
+DSC Dreams is a static progressive web app for practising English grammar, vocabulary, and phonetics questions from DSC and TET papers. The current question bank contains 1,418 questions.
 
 ## Files required for GitHub Pages
 

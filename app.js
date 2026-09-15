@@ -2,8 +2,10 @@
 let masterQuestions = [];
 let activeSessionQuestions = [];
 let currentIndex = 0;
-let userAnswers = {}; 
+let userAnswers = {};
+let displayedAnswers = {};
 let currentMode = "practice"; // 'practice', 'test', 'remedial', 'review'
+let currentSessionType = ""; // 'previous', 'topic', or 'remedial'
 let timerInterval = null;
 let secondsRemaining = 0;
 let initialTimeSeconds = 0; 
@@ -107,7 +109,7 @@ function setupRouting() {
       currentMode = card.dataset.mode; // 'practice' or 'test'
       
       if (target === "panel-topic") {
-        document.getElementById("topic-panel-title").innerText = currentMode === "practice" ? "Grammar/Vocab Topic (Practice Mode)" : "Grammar/Vocab Topic (Testing Mode)";
+        document.getElementById("topic-panel-title").innerText = currentMode === "practice" ? "Grammar/Vocabulary/Phonetics Topic (Practice Mode)" : "Grammar/Vocabulary/Phonetics Topic (Testing Mode)";
         document.getElementById("topic-time-wrap").classList.toggle("hidden", currentMode === "practice");
       } else if (target === "panel-previous") {
         document.getElementById("prev-panel-title").innerText = currentMode === "practice" ? "Previous Paper (Practice Mode)" : "Previous Paper (Testing Mode)";
@@ -169,47 +171,18 @@ function populateDropdowns() {
 // Previous Paper Logic
 document.getElementById("prev-exam")?.addEventListener("change", (e) => {
   const selExam = e.target.value;
-  const categorySelect = document.getElementById("prev-category");
-  const yearSelect = document.getElementById("prev-year");
-  const setSelect = document.getElementById("prev-set");
-
-  categorySelect.innerHTML = '<option value="">Select Category</option>';
-  yearSelect.innerHTML = '<option value="">Select Year</option>';
-  setSelect.innerHTML = '<option value="">Select Set</option>';
-  yearSelect.disabled = true;
-  setSelect.disabled = true;
-
-  const categories = new Set();
-  masterQuestions.forEach(q => {
-    const parts = getQuestionId(q).split("_");
-    if (parts[0] === selExam && parts[1]) categories.add(parts[1]);
-  });
-
-  [...categories].sort().forEach(category => {
-    categorySelect.innerHTML += `<option value="${category}">${category}</option>`;
-  });
-  categorySelect.disabled = categories.size === 0;
-  categorySelect.dispatchEvent(new Event("change"));
-});
-
-document.getElementById("prev-category")?.addEventListener("change", (e) => {
-  const selExam = document.getElementById("prev-exam").value;
-  const selCategory = e.target.value;
   const yearSelect = document.getElementById("prev-year");
   const setSelect = document.getElementById("prev-set");
 
   yearSelect.innerHTML = '<option value="">Select Year</option>';
   setSelect.innerHTML = '<option value="">Select Set</option>';
   setSelect.disabled = true;
-  if (!selCategory) {
-    yearSelect.disabled = true;
-    return;
-  }
 
   const years = new Set();
   masterQuestions.forEach(q => {
     const parts = getQuestionId(q).split("_");
-    if (parts[0] === selExam && parts[1] === selCategory && parts[2]) {
+    if (parts[0] === selExam && parts[1] === "SGT" && parts[2]) {
+      if (selExam === "DSC" && (parts[2] === "2010" || parts[2] === "2015")) return;
       years.add(parts[2]);
     }
   });
@@ -223,7 +196,6 @@ document.getElementById("prev-category")?.addEventListener("change", (e) => {
 
 document.getElementById("prev-year")?.addEventListener("change", (e) => {
   const selExam = document.getElementById("prev-exam").value;
-  const selCategory = document.getElementById("prev-category").value;
   const selYear = e.target.value;
   const setSelect = document.getElementById("prev-set");
 
@@ -236,7 +208,7 @@ document.getElementById("prev-year")?.addEventListener("change", (e) => {
   const sets = new Set();
   masterQuestions.forEach(q => {
     const parts = getQuestionId(q).split("_");
-    if (parts[0] === selExam && parts[1] === selCategory && parts[2] === selYear && parts[3]) {
+    if (parts[0] === selExam && parts[1] === "SGT" && parts[2] === selYear && parts[3]) {
       sets.add(parts[3]);
     }
   });
@@ -250,7 +222,6 @@ document.getElementById("prev-year")?.addEventListener("change", (e) => {
 
 document.getElementById("prev-set")?.addEventListener("change", (e) => {
   const selExam = document.getElementById("prev-exam").value;
-  const selCategory = document.getElementById("prev-category").value;
   const selYear = document.getElementById("prev-year").value;
   const selSet = e.target.value;
 
@@ -261,7 +232,7 @@ document.getElementById("prev-set")?.addEventListener("change", (e) => {
 
   const matching = masterQuestions.filter(q => {
     const parts = getQuestionId(q).split("_");
-    return parts[0] === selExam && parts[1] === selCategory &&
+    return parts[0] === selExam && parts[1] === "SGT" &&
       parts[2] === selYear && parts[3] === selSet;
   });
 
@@ -272,8 +243,9 @@ document.getElementById("prev-set")?.addEventListener("change", (e) => {
 });
 
 // Topic Panel Logic
-document.getElementById("topic-broad")?.addEventListener("change", (e) => {
-  const broad = e.target.value;
+function updateTopicSubtopics() {
+  const broad = document.getElementById("topic-broad").value;
+  const selectedExam = document.getElementById("topic-exam").value;
   const subSelect = document.getElementById("topic-sub");
   subSelect.innerHTML = '<option value="ALL">All Subtopics</option>';
 
@@ -281,7 +253,10 @@ document.getElementById("topic-broad")?.addEventListener("change", (e) => {
     subSelect.disabled = true;
   } else {
     const subsCounts = {};
-    masterQuestions.filter(q => q.Broad_Area === broad).forEach(q => {
+    masterQuestions.filter(q => {
+      if (q.Broad_Area !== broad) return false;
+      return selectedExam === "ALL" || getQuestionId(q).startsWith(`${selectedExam}_`);
+    }).forEach(q => {
       if (q.Main_Area) {
         subsCounts[q.Main_Area] = (subsCounts[q.Main_Area] || 0) + 1;
       }
@@ -295,13 +270,17 @@ document.getElementById("topic-broad")?.addEventListener("change", (e) => {
     subSelect.disabled = false;
   }
   updateTopicFilterLiveCount(true);
-});
+}
 
-["topic-exam", "topic-sub", "topic-diff"].forEach(id => {
+document.getElementById("topic-broad")?.addEventListener("change", updateTopicSubtopics);
+document.getElementById("topic-exam")?.addEventListener("change", updateTopicSubtopics);
+
+["topic-sub", "topic-diff"].forEach(id => {
   document.getElementById(id)?.addEventListener("change", () => updateTopicFilterLiveCount(true));
 });
 document.getElementById("topic-qcount")?.addEventListener("change", () => updateTopicFilterLiveCount(false));
 document.getElementById("topic-qcount")?.addEventListener("keyup", () => updateTopicFilterLiveCount(false));
+document.getElementById("topic-qcount")?.addEventListener("input", () => updateTopicFilterLiveCount(false));
 
 // Stepper Logic
 document.getElementById("btn-q-down")?.addEventListener("click", () => {
@@ -340,9 +319,15 @@ function updateTopicFilterLiveCount(resetCount = false) {
   document.getElementById("topic-avail-count").innerText = count;
   
   const qInput = document.getElementById("topic-qcount");
-  qInput.max = count;
-  if (resetCount || !qInput.value || parseInt(qInput.value) > count) {
-      qInput.value = count;
+  const sessionMaximum = Math.min(count, 50);
+  qInput.max = sessionMaximum;
+  const requestedCount = parseInt(qInput.value);
+  if (resetCount || !Number.isFinite(requestedCount)) {
+      qInput.value = sessionMaximum;
+  } else if (requestedCount > sessionMaximum) {
+      qInput.value = sessionMaximum;
+  } else if (requestedCount < 1 && count > 0) {
+      qInput.value = 1;
   }
   
   document.getElementById("topic-start").disabled = count === 0;
@@ -355,28 +340,30 @@ function updateTopicFilterLiveCount(resetCount = false) {
 // Start Buttons
 document.getElementById("prev-start")?.addEventListener("click", () => {
   const selExam = document.getElementById("prev-exam").value;
-  const selCategory = document.getElementById("prev-category").value;
   const selYear = document.getElementById("prev-year").value;
   const selSet = document.getElementById("prev-set").value;
 
   activeSessionQuestions = masterQuestions.filter(q => {
     const parts = getQuestionId(q).split("_");
-    return parts[0] === selExam && parts[1] === selCategory &&
+    return parts[0] === selExam && parts[1] === "SGT" &&
       parts[2] === selYear && parts[3] === selSet;
   });
+  currentSessionType = "previous";
   startSession(currentMode === "test");
 });
 
 document.getElementById("topic-start")?.addEventListener("click", () => {
   let list = getFilteredTopicQuestions();
-  const maxQ = parseInt(document.getElementById("topic-qcount").value) || list.length;
+  const maxQ = Math.min(parseInt(document.getElementById("topic-qcount").value) || 1, list.length, 50);
   activeSessionQuestions = list.slice(0, maxQ);
+  currentSessionType = "topic";
   startSession(currentMode === "test"); 
 });
 
 document.getElementById("remedial-start")?.addEventListener("click", () => {
   const mistakeIds = getStoredMistakes();
   activeSessionQuestions = masterQuestions.filter(q => mistakeIds.includes(getQuestionId(q)));
+  currentSessionType = "remedial";
   
   if (document.getElementById("remedial-ignore-opt").checked) {
     localStorage.removeItem(MISTAKES_KEY);
@@ -389,6 +376,7 @@ document.getElementById("remedial-start")?.addEventListener("click", () => {
 function startSession(isTimed) {
   currentIndex = 0;
   userAnswers = {};
+  displayedAnswers = {};
   isSessionActive = true;
   
   document.querySelectorAll(".config-panel, .dashboard-view").forEach(p => p.classList.add("hidden"));
@@ -455,7 +443,10 @@ function renderQuestion(idx) {
     btn.className = "option-btn";
     btn.innerHTML = `<strong>(${letter})</strong> <span>${optVal}</span>`;
 
-    if (userAnswers[actualIdx] === letter) {
+    const displayedAnswer = currentMode === "review"
+      ? userAnswers[actualIdx]
+      : (displayedAnswers[actualIdx] || userAnswers[actualIdx]);
+    if (displayedAnswer === letter) {
       btn.classList.add("selected");
     }
 
@@ -470,8 +461,11 @@ function renderQuestion(idx) {
     optionsWrap.appendChild(btn);
   });
 
-  if ((currentMode === "practice" && userAnswers[actualIdx]) || currentMode === "review") {
-    showPracticeFeedback(userAnswers[actualIdx] || "Unanswered", actualIdx);
+  if ((currentMode === "practice" && (displayedAnswers[actualIdx] || userAnswers[actualIdx])) || currentMode === "review") {
+    const feedbackAnswer = currentMode === "review"
+      ? (userAnswers[actualIdx] || "Unanswered")
+      : (displayedAnswers[actualIdx] || userAnswers[actualIdx]);
+    showPracticeFeedback(feedbackAnswer, actualIdx);
   }
 
   // Handle Bottom Navigation buttons state
@@ -487,11 +481,19 @@ function renderQuestion(idx) {
 }
 
 function handleSelectOption(letter, actualIdx) {
-  userAnswers[actualIdx] = letter;
   const q = activeSessionQuestions[actualIdx];
+  const hasRecordedAnswer = Object.prototype.hasOwnProperty.call(userAnswers, actualIdx);
+  const useFirstClick = currentMode !== "practice" || currentSessionType === "topic";
+
+  if (!useFirstClick || !hasRecordedAnswer) {
+    userAnswers[actualIdx] = letter;
+  }
+  displayedAnswers[actualIdx] = letter;
 
   if (currentMode === "practice") {
-    if (letter !== q.Answer) logMistake(getQuestionId(q));
+    if (letter !== q.Answer && (!useFirstClick || !hasRecordedAnswer)) {
+      logMistake(getQuestionId(q));
+    }
     renderQuestion(currentIndex);
   } else {
     renderQuestion(currentIndex);
