@@ -16,5 +16,9 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "id": "./",
+  "scope": "./",
+  "lang": "en",
+  "description": "English grammar and vocabulary practice for DSC and TET examinations."
 }

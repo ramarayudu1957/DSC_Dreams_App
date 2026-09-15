@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#1e3a8a" />
+  <link rel="icon" href="icon-192.png" type="image/png" />
 </head>
 <body>
 
@@ -33,7 +34,7 @@
         <!-- Feature 1: Practice by Topic -->
         <div class="feature-item">
           <h3>🎯 Practice by Topic</h3>
-          <p>Choose a topic you want to improve and practise it until you feel confident. The app covers around 30 English topics.</p>
+          <p>Choose a topic you want to improve and practise it until you feel confident. The app covers 17 broad areas and 59 subtopics.</p>
           <p class="topic-list-static">
             Tenses & Aspect, Prepositions, Sentence Transformation, Articles, Modals & Semi-Modals, Spelling, Reported Speech, Punctuation
           </p>
@@ -57,7 +58,7 @@
         <!-- Feature 4: Previous Papers -->
         <div class="feature-item">
           <h3>⏱️ Previous Papers</h3>
-          <p>Practise with 63 full sets of previous exam papers covering a wide range of question types and topics.</p>
+          <p>Practise with <strong id="dataset-question-count">1,424</strong> authentic language questions from <strong id="dataset-paper-count">84</strong> previous-paper sets.</p>
           <p>You can also use Practice Mode with previous papers. Attempt real exam questions without a time limit and get feedback on each option as you practise.</p>
         </div>
 
@@ -171,6 +172,10 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="prev-category">Exam Category</label>
+          <select id="prev-category" disabled></select>
+        </div>
+        <div class="form-group">
           <label for="prev-year">Year</label>
           <select id="prev-year" disabled></select>
         </div>
@@ -215,9 +220,9 @@
           <label for="topic-diff">Difficulty</label>
           <select id="topic-diff">
             <option value="ALL">All Levels</option>
-            <option value="LOW">Low (1 - 3)</option>
-            <option value="MED">Medium (4 - 7)</option>
-            <option value="HIGH">High (8 - 10)</option>
+            <option value="LOW">Low</option>
+            <option value="MED">Medium</option>
+            <option value="HIGH">High</option>
           </select>
         </div>
         <div class="form-group">
@@ -334,5 +339,14 @@
 
   </main>
   <script src="app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(error => {
+          console.error("Service worker registration failed", error);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
